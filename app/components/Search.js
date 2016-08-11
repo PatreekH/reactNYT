@@ -1,7 +1,29 @@
 // Include React 
 var React = require('react');
 
+var helpers = require('./utils/helpers.js');
+
 var Search = React.createClass({
+
+	getInitialState: function(){
+		return {
+			topic: "",
+			startDate: "",
+			endDate: ""
+		}
+	},
+
+	handleChange: function(){
+		var newSearch = {};
+		newSearch[event.target.id] = event.target.value;
+		this.setState(newSearch);
+	},
+
+	handleClick: function(){
+		helpers.runQuery(this.state.topic, this.state.startDate, this.state.endDate).then(function(data){
+			console.log(data);
+		});
+	},
 
 	// Here we render the component
 	render: function(){
@@ -23,23 +45,19 @@ var Search = React.createClass({
 									<form>
 										<div className="form-group">
 											<h4 className=""><strong>Topic</strong></h4>
-
-											{/*Note how each of the form elements has an id that matches the state. This is not necessary but it is convenient.
-												Also note how each has an onChange event associated with our handleChange event. 
-											*/}
-											<input type="text" className="form-control " id="num1" required/>
+											<input type="text" className="form-control " id="num1" onChange={this.handleChange} required/>
 
 											<h4 className=""><strong>Start Date</strong></h4>
-											<input type="text" className="form-control " id="num2" required/>
+											<input type="text" className="form-control " id="num2" onChange={this.handleChange} required/>
 
 											<h4 className=""><strong>End Date</strong></h4>
-											<input type="text" className="form-control " id="text" required/>
+											<input type="text" className="form-control " id="text" onChange={this.handleChange} required/>
 
 										</div>
 
 									</form>
 									{/*<a href="#/saved"><button>Saved</button></a>*/}
-									<a href="#/results"><button>Search</button></a>
+									<a href="#/results"><button onClick={this.handleClick}>Search</button></a>
 							</div>
 						</div>
 
