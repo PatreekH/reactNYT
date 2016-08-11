@@ -2,7 +2,7 @@
 var axios = require('axios');
 
 // Geocoder API
-var authKey = "b9f91d369ff59547cd47b931d8cbc56b:0:74623931";
+var authKey = "ed9bcf16982649ceb528f12ccf34d69c";
 
 // Helper Functions (in this case the only one is runQuery)
 var helpers = {
@@ -19,7 +19,7 @@ var helpers = {
 			.then(function(response){
 
 				console.log(response);
-				/*return response.data.results[0].formatted;*/
+				return response
 		})
 
 	}
