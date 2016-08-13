@@ -8,19 +8,18 @@ var authKey = "ed9bcf16982649ceb528f12ccf34d69c";
 var helpers = {
 
 	// This function serves our purpose of running the query to geolocate. 
-	runQuery: function(searchTerm, startYear, endYear){
+	runQuery: function(searchTerm, startDate, endDate){
 
-		console.log(searchTerm, startYear, endYear);
+		console.log(searchTerm, startDate, endDate);
 
-		//Figure out the geolocation
-		var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=" + searchTerm + "&begin_date=" + startYear + "0101" + "&end_date=" + endYear + "0101";
+		var authKey = "ed9bcf16982649ceb528f12ccf34d69c";
+		var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + searchTerm + "&begin_date=" + startDate + "&end_date=" + endDate + "&api-key=" + authKey;
 
-		return axios.get(queryURL)
-			.then(function(response){
-
+		return new Promise(function(resolve, reject) {
+			axios.get(queryURL).then(function(response){
 				console.log(response);
-				return response
-		})
+			})
+		});
 
 	}
 

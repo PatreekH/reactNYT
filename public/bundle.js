@@ -25374,8 +25374,8 @@
 	// Reference the high-level components
 	var Main = __webpack_require__(223);
 	var Search = __webpack_require__(224);
-	var Saved = __webpack_require__(225);
-	var Results = __webpack_require__(226);
+	var Saved = __webpack_require__(245);
+	var Results = __webpack_require__(246);
 
 	// Export the Routes
 	module.exports = React.createElement(
@@ -25404,13 +25404,6 @@
 
 	var Main = React.createClass({
 		displayName: 'Main',
-
-
-		getInitialState: function getInitialState() {
-			return {
-				test: ""
-			};
-		},
 
 		// Here we render the component
 		render: function render() {
@@ -25457,7 +25450,7 @@
 	// Include React 
 	var React = __webpack_require__(1);
 
-	var helpers = __webpack_require__(227);
+	var helpers = __webpack_require__(225);
 
 	var Search = React.createClass({
 		displayName: 'Search',
@@ -25471,13 +25464,26 @@
 			};
 		},
 
-		handleChange: function handleChange() {
+		handleChangeTerm: function handleChangeTerm(event) {
+			var newSearch = {};
+			newSearch[event.target.id] = event.target.value;
+			this.setState(newSearch);
+		},
+
+		handleChangeStartDate: function handleChangeStartDate(event) {
+			var newSearch = {};
+			newSearch[event.target.id] = event.target.value;
+			this.setState(newSearch);
+		},
+
+		handleChangeEndDate: function handleChangeEndDate(event) {
 			var newSearch = {};
 			newSearch[event.target.id] = event.target.value;
 			this.setState(newSearch);
 		},
 
 		handleClick: function handleClick() {
+			console.log(this.state.topic, this.state.startDate, this.state.endDate);
 			helpers.runQuery(this.state.topic, this.state.startDate, this.state.endDate).then(function (data) {
 				console.log(data);
 			});
@@ -25522,27 +25528,27 @@
 											'Topic'
 										)
 									),
-									React.createElement('input', { type: 'text', className: 'form-control ', id: 'num1', onChange: this.handleChange, required: true }),
+									React.createElement('input', { type: 'text', className: 'form-control ', id: 'topic', onChange: this.handleChangeTerm, required: true }),
 									React.createElement(
 										'h4',
 										{ className: '' },
 										React.createElement(
 											'strong',
 											null,
-											'Start Date'
+											'Start Date (YYYYMMDD)'
 										)
 									),
-									React.createElement('input', { type: 'text', className: 'form-control ', id: 'num2', onChange: this.handleChange, required: true }),
+									React.createElement('input', { type: 'text', className: 'form-control ', id: 'startDate', onChange: this.handleChangeStartDate, required: true }),
 									React.createElement(
 										'h4',
 										{ className: '' },
 										React.createElement(
 											'strong',
 											null,
-											'End Date'
+											'End Date (YYYYMMDD)'
 										)
 									),
-									React.createElement('input', { type: 'text', className: 'form-control ', id: 'text', onChange: this.handleChange, required: true })
+									React.createElement('input', { type: 'text', className: 'form-control ', id: 'endDate', onChange: this.handleChangeEndDate, required: true })
 								)
 							),
 							React.createElement(
@@ -25570,129 +25576,8 @@
 
 	"use strict";
 
-	// Include React 
-	var React = __webpack_require__(1);
-
-	var Saved = React.createClass({
-		displayName: "Saved",
-
-
-		// Here we render the component
-		render: function render() {
-
-			return React.createElement(
-				"div",
-				{ className: "row" },
-				React.createElement(
-					"div",
-					{ className: "col-lg-12" },
-					React.createElement(
-						"div",
-						{ className: "panel panel-default" },
-						React.createElement(
-							"div",
-							{ className: "panel-heading" },
-							React.createElement(
-								"h3",
-								{ className: "panel-title" },
-								"Movie Info"
-							)
-						),
-						React.createElement(
-							"div",
-							{ className: "panel-body" },
-							React.createElement(
-								"p",
-								null,
-								React.createElement(
-									"strong",
-									null,
-									"mjlover:"
-								),
-								" OMG I LOVE THIS PART!!! "
-							),
-							React.createElement(
-								"p",
-								null,
-								React.createElement(
-									"strong",
-									null,
-									"bugsboy:"
-								),
-								" Best movie of all time."
-							),
-							React.createElement(
-								"p",
-								null,
-								React.createElement(
-									"strong",
-									null,
-									"bigtroll:"
-								),
-								" Porky needs to go on a diet."
-							)
-						)
-					)
-				)
-			);
-		}
-	});
-
-	// Export the component back for use in other files
-	module.exports = Saved;
-
-/***/ },
-/* 226 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	// Include React 
-	var React = __webpack_require__(1);
-
-	var Results = React.createClass({
-		displayName: "Results",
-
-
-		// Here we render the component
-		render: function render() {
-
-			return React.createElement(
-				"div",
-				{ className: "row" },
-				React.createElement(
-					"div",
-					{ className: "col-lg-12" },
-					React.createElement(
-						"div",
-						{ className: "panel panel-default" },
-						React.createElement(
-							"div",
-							{ className: "panel-heading" },
-							React.createElement(
-								"h3",
-								{ className: "panel-title" },
-								"Results"
-							)
-						),
-						React.createElement("div", { className: "panel-body" })
-					)
-				)
-			);
-		}
-	});
-
-	// Export the component back for use in other files
-	module.exports = Results;
-
-/***/ },
-/* 227 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
 	// Include the axios package for performing HTTP requests (promise based alternative to request)
-	var axios = __webpack_require__(228);
+	var axios = __webpack_require__(226);
 
 	// Geocoder API
 	var authKey = "ed9bcf16982649ceb528f12ccf34d69c";
@@ -25701,17 +25586,17 @@
 	var helpers = {
 
 		// This function serves our purpose of running the query to geolocate. 
-		runQuery: function runQuery(searchTerm, startYear, endYear) {
+		runQuery: function runQuery(searchTerm, startDate, endDate) {
 
-			console.log(searchTerm, startYear, endYear);
+			console.log(searchTerm, startDate, endDate);
 
-			//Figure out the geolocation
-			var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=" + searchTerm + "&begin_date=" + startYear + "0101" + "&end_date=" + endYear + "0101";
+			var authKey = "ed9bcf16982649ceb528f12ccf34d69c";
+			var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + searchTerm + "&begin_date=" + startDate + "&end_date=" + endDate + "&api-key=" + authKey;
 
-			return axios.get(queryURL).then(function (response) {
-
-				console.log(response);
-				return response;
+			return new Promise(function (resolve, reject) {
+				axios.get(queryURL).then(function (response) {
+					console.log(response);
+				});
 			});
 		}
 
@@ -25743,25 +25628,25 @@
 	module.exports = helpers;
 
 /***/ },
-/* 228 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(229);
+	module.exports = __webpack_require__(227);
 
 /***/ },
-/* 229 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defaults = __webpack_require__(230);
-	var utils = __webpack_require__(231);
-	var dispatchRequest = __webpack_require__(233);
-	var InterceptorManager = __webpack_require__(242);
-	var isAbsoluteURL = __webpack_require__(243);
-	var combineURLs = __webpack_require__(244);
-	var bind = __webpack_require__(245);
-	var transformData = __webpack_require__(237);
+	var defaults = __webpack_require__(228);
+	var utils = __webpack_require__(229);
+	var dispatchRequest = __webpack_require__(231);
+	var InterceptorManager = __webpack_require__(240);
+	var isAbsoluteURL = __webpack_require__(241);
+	var combineURLs = __webpack_require__(242);
+	var bind = __webpack_require__(243);
+	var transformData = __webpack_require__(235);
 
 	function Axios(defaultConfig) {
 	  this.defaults = utils.merge({}, defaultConfig);
@@ -25850,7 +25735,7 @@
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(246);
+	axios.spread = __webpack_require__(244);
 
 	// Provide aliases for supported request methods
 	utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
@@ -25878,13 +25763,13 @@
 
 
 /***/ },
-/* 230 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(231);
-	var normalizeHeaderName = __webpack_require__(232);
+	var utils = __webpack_require__(229);
+	var normalizeHeaderName = __webpack_require__(230);
 
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -25956,7 +25841,7 @@
 
 
 /***/ },
-/* 231 */
+/* 229 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26239,12 +26124,12 @@
 
 
 /***/ },
-/* 232 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(231);
+	var utils = __webpack_require__(229);
 
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -26257,7 +26142,7 @@
 
 
 /***/ },
-/* 233 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -26279,10 +26164,10 @@
 	        adapter = config.adapter;
 	      } else if (typeof XMLHttpRequest !== 'undefined') {
 	        // For browsers use XHR adapter
-	        adapter = __webpack_require__(234);
+	        adapter = __webpack_require__(232);
 	      } else if (typeof process !== 'undefined') {
 	        // For node use HTTP adapter
-	        adapter = __webpack_require__(234);
+	        adapter = __webpack_require__(232);
 	      }
 
 	      if (typeof adapter === 'function') {
@@ -26298,18 +26183,18 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 234 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(231);
-	var buildURL = __webpack_require__(235);
-	var parseHeaders = __webpack_require__(236);
-	var transformData = __webpack_require__(237);
-	var isURLSameOrigin = __webpack_require__(238);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(239);
-	var settle = __webpack_require__(240);
+	var utils = __webpack_require__(229);
+	var buildURL = __webpack_require__(233);
+	var parseHeaders = __webpack_require__(234);
+	var transformData = __webpack_require__(235);
+	var isURLSameOrigin = __webpack_require__(236);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(237);
+	var settle = __webpack_require__(238);
 
 	module.exports = function xhrAdapter(resolve, reject, config) {
 	  var requestData = config.data;
@@ -26406,7 +26291,7 @@
 	  // This is only done if running in a standard browser environment.
 	  // Specifically not if we're in a web worker, or react-native.
 	  if (utils.isStandardBrowserEnv()) {
-	    var cookies = __webpack_require__(241);
+	    var cookies = __webpack_require__(239);
 
 	    // Add xsrf header
 	    var xsrfValue = config.withCredentials || isURLSameOrigin(config.url) ?
@@ -26467,12 +26352,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 235 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(231);
+	var utils = __webpack_require__(229);
 
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -26541,12 +26426,12 @@
 
 
 /***/ },
-/* 236 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(231);
+	var utils = __webpack_require__(229);
 
 	/**
 	 * Parse headers into an object
@@ -26584,12 +26469,12 @@
 
 
 /***/ },
-/* 237 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(231);
+	var utils = __webpack_require__(229);
 
 	/**
 	 * Transform the data for a request or a response
@@ -26610,12 +26495,12 @@
 
 
 /***/ },
-/* 238 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(231);
+	var utils = __webpack_require__(229);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -26684,7 +26569,7 @@
 
 
 /***/ },
-/* 239 */
+/* 237 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26726,7 +26611,7 @@
 
 
 /***/ },
-/* 240 */
+/* 238 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26750,12 +26635,12 @@
 
 
 /***/ },
-/* 241 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(231);
+	var utils = __webpack_require__(229);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -26809,12 +26694,12 @@
 
 
 /***/ },
-/* 242 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(231);
+	var utils = __webpack_require__(229);
 
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -26867,7 +26752,7 @@
 
 
 /***/ },
-/* 243 */
+/* 241 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26887,7 +26772,7 @@
 
 
 /***/ },
-/* 244 */
+/* 242 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26905,7 +26790,7 @@
 
 
 /***/ },
-/* 245 */
+/* 243 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26922,7 +26807,7 @@
 
 
 /***/ },
-/* 246 */
+/* 244 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26953,6 +26838,127 @@
 	  };
 	};
 
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	// Include React 
+	var React = __webpack_require__(1);
+
+	var Saved = React.createClass({
+		displayName: "Saved",
+
+
+		// Here we render the component
+		render: function render() {
+
+			return React.createElement(
+				"div",
+				{ className: "row" },
+				React.createElement(
+					"div",
+					{ className: "col-lg-12" },
+					React.createElement(
+						"div",
+						{ className: "panel panel-default" },
+						React.createElement(
+							"div",
+							{ className: "panel-heading" },
+							React.createElement(
+								"h3",
+								{ className: "panel-title" },
+								"Movie Info"
+							)
+						),
+						React.createElement(
+							"div",
+							{ className: "panel-body" },
+							React.createElement(
+								"p",
+								null,
+								React.createElement(
+									"strong",
+									null,
+									"mjlover:"
+								),
+								" OMG I LOVE THIS PART!!! "
+							),
+							React.createElement(
+								"p",
+								null,
+								React.createElement(
+									"strong",
+									null,
+									"bugsboy:"
+								),
+								" Best movie of all time."
+							),
+							React.createElement(
+								"p",
+								null,
+								React.createElement(
+									"strong",
+									null,
+									"bigtroll:"
+								),
+								" Porky needs to go on a diet."
+							)
+						)
+					)
+				)
+			);
+		}
+	});
+
+	// Export the component back for use in other files
+	module.exports = Saved;
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	// Include React 
+	var React = __webpack_require__(1);
+
+	var Results = React.createClass({
+		displayName: "Results",
+
+
+		// Here we render the component
+		render: function render() {
+
+			return React.createElement(
+				"div",
+				{ className: "row" },
+				React.createElement(
+					"div",
+					{ className: "col-lg-12" },
+					React.createElement(
+						"div",
+						{ className: "panel panel-default" },
+						React.createElement(
+							"div",
+							{ className: "panel-heading" },
+							React.createElement(
+								"h3",
+								{ className: "panel-title" },
+								"Results"
+							)
+						),
+						React.createElement("div", { className: "panel-body" })
+					)
+				)
+			);
+		}
+	});
+
+	// Export the component back for use in other files
+	module.exports = Results;
 
 /***/ }
 /******/ ]);

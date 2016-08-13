@@ -9,12 +9,6 @@ var IndexRoute = ReactRouter.IndexRoute;
 
 var Main = React.createClass({
 
-	getInitialState: function(){
-		return {
-			test: ""
-		}
-	},
-
 	// Here we render the component
 	render: function(){
 

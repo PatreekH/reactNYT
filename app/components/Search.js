@@ -13,13 +13,26 @@ var Search = React.createClass({
 		}
 	},
 
-	handleChange: function(){
+	handleChangeTerm: function(event){
+		var newSearch = {};
+		newSearch[event.target.id] = event.target.value;
+		this.setState(newSearch);
+	},
+
+	handleChangeStartDate: function(event){
+		var newSearch = {};
+		newSearch[event.target.id] = event.target.value;
+		this.setState(newSearch);
+	},
+
+	handleChangeEndDate: function(event){
 		var newSearch = {};
 		newSearch[event.target.id] = event.target.value;
 		this.setState(newSearch);
 	},
 
 	handleClick: function(){
+		console.log(this.state.topic, this.state.startDate, this.state.endDate);
 		helpers.runQuery(this.state.topic, this.state.startDate, this.state.endDate).then(function(data){
 			console.log(data);
 		});
@@ -45,13 +58,13 @@ var Search = React.createClass({
 									<form>
 										<div className="form-group">
 											<h4 className=""><strong>Topic</strong></h4>
-											<input type="text" className="form-control " id="num1" onChange={this.handleChange} required/>
+											<input type="text" className="form-control " id="topic" onChange={this.handleChangeTerm} required/>
 
-											<h4 className=""><strong>Start Date</strong></h4>
-											<input type="text" className="form-control " id="num2" onChange={this.handleChange} required/>
+											<h4 className=""><strong>Start Date (YYYYMMDD)</strong></h4>
+											<input type="text" className="form-control " id="startDate" onChange={this.handleChangeStartDate} required/>
 
-											<h4 className=""><strong>End Date</strong></h4>
-											<input type="text" className="form-control " id="text" onChange={this.handleChange} required/>
+											<h4 className=""><strong>End Date (YYYYMMDD)</strong></h4>
+											<input type="text" className="form-control " id="endDate" onChange={this.handleChangeEndDate} required/>
 
 										</div>
 
