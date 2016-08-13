@@ -26933,17 +26933,17 @@
 
 		getInitialState: function getInitialState() {
 			return {
-				article: ""
+				article: []
 			};
 		},
 
 		getData: function getData() {
 			helpers.getArticle().then(function (response) {
 				console.log("sent article to results");
-				console.log(response.data[0].article);
+				console.log(response);
 
 				this.setState({
-					article: response.data[0].article
+					article: response.data
 				});
 			}.bind(this));
 		},
@@ -26981,11 +26981,13 @@
 								{ onClick: this.getData },
 								'grab data'
 							),
-							React.createElement(
-								'p',
-								null,
-								this.state.article
-							)
+							this.state.article.map(function (search, i) {
+								return React.createElement(
+									'p',
+									{ key: i },
+									search.article
+								);
+							})
 						)
 					)
 				)

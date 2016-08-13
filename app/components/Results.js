@@ -7,17 +7,17 @@ var Results = React.createClass({
 
 	getInitialState: function(){
 		return {
-			article: ""
+			article: []
 		}
 	},
 
 	getData: function(){
 		helpers.getArticle().then(function(response){
 			console.log("sent article to results");
-			console.log(response.data[0].article);
+			console.log(response);
 
 			this.setState({
-				article: response.data[0].article
+				article: response.data
 			})
 
 			
@@ -45,7 +45,12 @@ var Results = React.createClass({
 						<div className="panel-body">
 
 						<button onClick={this.getData}>grab data</button>
-						<p>{this.state.article}</p>
+
+						{this.state.article.map(function(search, i)
+							{
+								return <p key={i}>{search.article}</p> 
+							}
+						)}
 
 						</div>
 					</div>
