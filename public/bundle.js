@@ -25486,6 +25486,9 @@
 			console.log(this.state.topic, this.state.startDate, this.state.endDate);
 			helpers.runQuery(this.state.topic, this.state.startDate, this.state.endDate).then(function (data) {
 				console.log(data);
+				helpers.postArticle(data).then(function (response) {
+					console.log("updated!");
+				});
 			});
 		},
 
@@ -25593,34 +25596,31 @@
 			var authKey = "ed9bcf16982649ceb528f12ccf34d69c";
 			var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + searchTerm + "&begin_date=" + startDate + "&end_date=" + endDate + "&api-key=" + authKey;
 
-			return new Promise(function (resolve, reject) {
-				axios.get(queryURL).then(function (response) {
-					console.log(response);
-				});
+			return axios.get(queryURL).then(function (response) {
+
+				console.log(response);
+				return response.data.response.docs[0].lead_paragraph;
+			});
+		},
+
+		getArticle: function getArticle(response) {
+
+			return axios.get('/api').then(function (results) {
+				console.log(results);
+				console.log("grabbed article from database");
+				return results;
+			});
+		},
+
+		// This function posts new searches to our database.
+		postArticle: function postArticle(response) {
+
+			return axios.post('/api', { article: response }).then(function (results) {
+
+				console.log("Posted to MongoDB");
+				return results;
 			});
 		}
-
-		/*	// This function hits our own server to retrieve the record of query results
-	 	getHistory: function(){
-	 
-	 		return axios.get('/api')
-	 			.then(function(response){
-	 
-	 				console.log(response);
-	 				return response;
-	 			});
-	 	},
-	 
-	 	// This function posts new searches to our database.
-	 	postHistory: function(location){
-	 
-	 		return axios.post('/api', {location: location})
-	 			.then(function(results){
-	 
-	 				console.log("Posted to MongoDB");
-	 				return(results);
-	 			})
-	 	}*/
 
 	};
 
@@ -26920,37 +26920,56 @@
 /* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	// Include React 
 	var React = __webpack_require__(1);
 
+	var helpers = __webpack_require__(225);
+
 	var Results = React.createClass({
-		displayName: "Results",
+		displayName: 'Results',
 
 
 		// Here we render the component
 		render: function render() {
 
+			/*		helpers.getArticle().then(function(response){
+	  			console.log(response);
+	  		});*/
+
 			return React.createElement(
-				"div",
-				{ className: "row" },
+				'div',
+				{ className: 'row' },
 				React.createElement(
-					"div",
-					{ className: "col-lg-12" },
+					'div',
+					{ className: 'col-lg-12' },
 					React.createElement(
-						"div",
-						{ className: "panel panel-default" },
+						'div',
+						{ className: 'panel panel-default' },
 						React.createElement(
-							"div",
-							{ className: "panel-heading" },
+							'div',
+							{ className: 'panel-heading' },
 							React.createElement(
-								"h3",
-								{ className: "panel-title" },
-								"Results"
+								'h3',
+								{ className: 'panel-title' },
+								'Results'
 							)
 						),
-						React.createElement("div", { className: "panel-body" })
+						React.createElement(
+							'div',
+							{ className: 'panel-body' },
+							React.createElement(
+								'button',
+								{ onClick: this.getData },
+								'grab data'
+							),
+							React.createElement(
+								'p',
+								null,
+								this.state.article
+							)
+						)
 					)
 				)
 			);

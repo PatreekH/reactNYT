@@ -35,6 +35,9 @@ var Search = React.createClass({
 		console.log(this.state.topic, this.state.startDate, this.state.endDate);
 		helpers.runQuery(this.state.topic, this.state.startDate, this.state.endDate).then(function(data){
 			console.log(data);
+			helpers.postArticle(data).then(function(response){
+				console.log("updated!");
+			})
 		});
 	},
 
@@ -43,16 +46,16 @@ var Search = React.createClass({
 
 		return(
 
-			
-
 				<div className="row">
 
 					<div className="col-md-12">
 				
 						<div className="panel panel-default">
+						
 							<div className="panel-heading">
 								<h3 className="panel-title text-center">Form</h3>
 							</div>
+
 							<div className="panel-body text-center">
 
 									<form>
@@ -75,6 +78,7 @@ var Search = React.createClass({
 						</div>
 
 					</div>
+
 				</div>
 				
 		)

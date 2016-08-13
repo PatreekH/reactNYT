@@ -15,35 +15,35 @@ var helpers = {
 		var authKey = "ed9bcf16982649ceb528f12ccf34d69c";
 		var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + searchTerm + "&begin_date=" + startDate + "&end_date=" + endDate + "&api-key=" + authKey;
 
-		return new Promise(function(resolve, reject) {
-			axios.get(queryURL).then(function(response){
+		return axios.get(queryURL)
+			.then(function(response){
+			
 				console.log(response);
-			})
-		});
+				return response.data.response.docs[0].lead_paragraph;
+		})
 
-	}
+	},
 
-/*	// This function hits our own server to retrieve the record of query results
-	getHistory: function(){
+	getArticle: function(response){
 
 		return axios.get('/api')
-			.then(function(response){
-
-				console.log(response);
-				return response;
+			.then(function(results){
+				console.log(results);
+				console.log("grabbed article from database");
+				return results;
 			});
 	},
 
-	// This function posts new searches to our database.
-	postHistory: function(location){
+		// This function posts new searches to our database.
+	postArticle: function(response){
 
-		return axios.post('/api', {location: location})
+		return axios.post('/api', {article: response})
 			.then(function(results){
 
 				console.log("Posted to MongoDB");
 				return(results);
 			})
-	}*/
+	},
 
 }
 
