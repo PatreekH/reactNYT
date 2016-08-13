@@ -44,7 +44,7 @@ app.post('/api/', function(req, res){
 
   // Here we'll save the location based on the JSON input. 
   // We'll use Date.now() to always get the current date time
-db.articles.insert({"article": req.body.article, "date": Date.now()}, function(err){
+db.articles.insert({"articles": req.body.articles, "date": Date.now()}, function(err){
     if(err){
       console.log(err);
     }
@@ -59,7 +59,7 @@ db.articles.insert({"article": req.body.article, "date": Date.now()}, function(e
 app.get('/api/', function(req, res) {
 
   // We will find all the records, sort it in descending order, then limit the records to 5
-  db.articles.find({}).limit(5, function(err, doc){
+  db.articles.find({}).sort({"date": -1}).limit(5, function(err, doc){
 
       if(err){
         console.log(err);

@@ -25599,7 +25599,7 @@
 			return axios.get(queryURL).then(function (response) {
 
 				console.log(response);
-				return response.data.response.docs[0].lead_paragraph;
+				return response.data.response.docs;
 			});
 		},
 
@@ -25615,7 +25615,7 @@
 		// This function posts new searches to our database.
 		postArticle: function postArticle(response) {
 
-			return axios.post('/api', { article: response }).then(function (results) {
+			return axios.post('/api', { articles: response }).then(function (results) {
 
 				console.log("Posted to MongoDB");
 				return results;
@@ -26870,43 +26870,10 @@
 							React.createElement(
 								"h3",
 								{ className: "panel-title" },
-								"Movie Info"
+								"Saved Articles"
 							)
 						),
-						React.createElement(
-							"div",
-							{ className: "panel-body" },
-							React.createElement(
-								"p",
-								null,
-								React.createElement(
-									"strong",
-									null,
-									"mjlover:"
-								),
-								" OMG I LOVE THIS PART!!! "
-							),
-							React.createElement(
-								"p",
-								null,
-								React.createElement(
-									"strong",
-									null,
-									"bugsboy:"
-								),
-								" Best movie of all time."
-							),
-							React.createElement(
-								"p",
-								null,
-								React.createElement(
-									"strong",
-									null,
-									"bigtroll:"
-								),
-								" Porky needs to go on a diet."
-							)
-						)
+						React.createElement("div", { className: "panel-body" })
 					)
 				)
 			);
@@ -26943,17 +26910,13 @@
 				console.log(response);
 
 				this.setState({
-					article: response.data
+					article: response.data[0].articles
 				});
 			}.bind(this));
 		},
 
 		// Here we render the component
 		render: function render() {
-
-			/*		helpers.getArticle().then(function(response){
-	  			console.log(response);
-	  		});*/
 
 			return React.createElement(
 				'div',
@@ -26977,15 +26940,28 @@
 							'div',
 							{ className: 'panel-body' },
 							React.createElement(
+								'a',
+								{ href: '#/search' },
+								React.createElement(
+									'button',
+									null,
+									'Search'
+								)
+							),
+							React.createElement(
 								'button',
 								{ onClick: this.getData },
 								'grab data'
 							),
 							this.state.article.map(function (search, i) {
 								return React.createElement(
-									'p',
-									{ key: i },
-									search.article
+									'div',
+									{ className: 'well' },
+									React.createElement(
+										'p',
+										{ key: i },
+										search.lead_paragraph
+									)
 								);
 							})
 						)

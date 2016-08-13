@@ -19,7 +19,7 @@ var helpers = {
 			.then(function(response){
 			
 				console.log(response);
-				return response.data.response.docs[0].lead_paragraph;
+				return response.data.response.docs
 		})
 
 	},
@@ -37,7 +37,7 @@ var helpers = {
 		// This function posts new searches to our database.
 	postArticle: function(response){
 
-		return axios.post('/api', {article: response})
+		return axios.post('/api', {articles: response})
 			.then(function(results){
 
 				console.log("Posted to MongoDB");

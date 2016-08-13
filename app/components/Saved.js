@@ -16,12 +16,9 @@ var Saved = React.createClass({
 							
 							<div className="panel panel-default">
 								<div className="panel-heading">
-									<h3 className="panel-title">Movie Info</h3>
+									<h3 className="panel-title">Saved Articles</h3>
 								</div>
 								<div className="panel-body">
-									<p><strong>mjlover:</strong> OMG I LOVE THIS PART!!! </p>
-									<p><strong>bugsboy:</strong> Best movie of all time.</p>
-									<p><strong>bigtroll:</strong> Porky needs to go on a diet.</p>
 								</div>
 							</div>
 

@@ -17,7 +17,7 @@ var Results = React.createClass({
 			console.log(response);
 
 			this.setState({
-				article: response.data
+				article: response.data[0].articles
 			})
 
 			
@@ -27,10 +27,6 @@ var Results = React.createClass({
 
 	// Here we render the component
 	render: function(){
-
-/*		helpers.getArticle().then(function(response){
-			console.log(response);
-		});*/
 
 		return(
 
@@ -44,11 +40,12 @@ var Results = React.createClass({
 						</div>
 						<div className="panel-body">
 
+						<a href="#/search"><button>Search</button></a>
 						<button onClick={this.getData}>grab data</button>
 
 						{this.state.article.map(function(search, i)
 							{
-								return <p key={i}>{search.article}</p> 
+								return <div className="well"><p key={i}>{search.lead_paragraph}</p></div> 
 							}
 						)}
 
