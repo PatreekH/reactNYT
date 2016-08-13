@@ -5,7 +5,25 @@ var helpers = require('./utils/helpers.js');
 
 var Results = React.createClass({
 
+	getInitialState: function(){
+		return {
+			article: ""
+		}
+	},
 
+	getData: function(){
+		helpers.getArticle().then(function(response){
+			console.log("sent article to results");
+			console.log(response.data[0].article);
+
+			this.setState({
+				article: response.data[0].article
+			})
+
+			
+		}.bind(this));
+
+	},
 
 	// Here we render the component
 	render: function(){
